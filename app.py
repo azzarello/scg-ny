@@ -1,7 +1,7 @@
 import pandas as pd
 import flask
 import dash
-from dash_core_components import Interval, Tabs, Tab, Store, RadioItems, Upload, Dropdown
+import dash_core_components as dcc
 import dash_html_components as html
 import dash_table as dt
 import base64
@@ -23,7 +23,32 @@ app.css.append_css(
 app.config['suppress_callback_exceptions'] = True
 app.scripts.config.serve_locally = True
 
-app.layout = html.Div(html.H1(children='Hello Dash'))
+colors = {
+    'background': '#111111',
+    'text': '#7FDBFF'
+}
+
+app.layout = html.Div(
+    children=html.Div([html.H2(children='The Second Chance Gap - The State of New York', className='nine columns'),
+                       dcc.Dropdown(options=[
+                           {'label': 'New York City', 'value': 'NYC'},
+                           {'label': 'Montréal', 'value': 'MTL'},
+                           {'label': 'San Francisco',
+                            'value': 'SF'}
+                       ],
+        value='MTL'),
+        dcc.RadioItems(options=[
+            {'label': 'New York City', 'value': 'NYC'},
+            {'label': 'Montréal', 'value': 'MTL'},
+            {'label': 'San Francisco', 'value': 'SF'}
+        ],
+        value='MTL'
+    ),
+        dcc.Input(
+        placeholder='Enter a value...',
+        type='text',
+        value=''
+    )]))
 
 if __name__ == '__main__':
     flask_server.run(debug=True)
