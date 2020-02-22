@@ -30,25 +30,34 @@ colors = {
 
 app.layout = html.Div(
     children=html.Div([html.H2(children='The Second Chance Gap - The State of New York', className='nine columns'),
-                       dcc.Dropdown(options=[
-                           {'label': 'New York City', 'value': 'NYC'},
-                           {'label': 'Montréal', 'value': 'MTL'},
-                           {'label': 'San Francisco',
-                            'value': 'SF'}
+                       dcc.Dropdown(id='state-dropdown',
+                                    options=[
+                                        {'label': 'New York', 'value': 'NY'},
+                                        {'label': 'Washington State', 'value': 'WA'}
+                                    ],
+                                    value='NY',
+                                    className='six columns'),
+                       dcc.RadioItems(options=[
+                           {'label': 'New York', 'value': 'NY'},
+                           {'label': 'Washington State', 'value': 'WA'}
                        ],
-        value='MTL'),
-        dcc.RadioItems(options=[
-            {'label': 'New York City', 'value': 'NYC'},
-            {'label': 'Montréal', 'value': 'MTL'},
-            {'label': 'San Francisco', 'value': 'SF'}
-        ],
-        value='MTL'
+        value='NY',
+        className='six columns'
     ),
         dcc.Input(
         placeholder='Enter a value...',
         type='text',
         value=''
-    )]))
+    ),
+        html.H1(id='output', children="")])
+)
+
+
+@app.callback(Output('output', 'children'),
+              [Input('state-dropdown', 'value')])
+def update_output_component(dropdown_value):
+    return dropdown_value
+
 
 if __name__ == '__main__':
     flask_server.run(debug=True)
