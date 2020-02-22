@@ -3,54 +3,51 @@ import flask
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import dash_table as dt
-import base64
-from io import StringIO
-from io import BytesIO
-import urllib.parse
-import datetime
-import time
-import pickle
+from datetime import datetime
 
 from dash.dependencies import Input, Output, State
 
+from func import crime_entry_div, generate_crime_entry
+
+external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
+
 flask_server = flask.Flask(__name__)
-app = dash.Dash(__name__, server=flask_server, url_base_pathname='/')
-app.css.append_css(
-    {'external_url': 'https://codepen.io/amyoshino/pen/jzXypZ.css'})
+app = dash.Dash(__name__, server=flask_server,
+                url_base_pathname='/',
+                external_stylesheets=external_stylesheets)
 
 
 app.config['suppress_callback_exceptions'] = True
 app.scripts.config.serve_locally = True
 
-colors = {
-    'background': '#111111',
-    'text': '#7FDBFF'
-}
+app.layout = html.Div(children=[
+    html.Div(html.H2(
+        children='The Second Chance Gap', className='nine columns')),
 
-app.layout = html.Div(
-    children=html.Div([html.H2(children='The Second Chance Gap - The State of New York', className='nine columns'),
-                       dcc.Dropdown(id='state-dropdown',
-                                    options=[
-                                        {'label': 'New York', 'value': 'NY'},
-                                        {'label': 'Washington State', 'value': 'WA'}
-                                    ],
-                                    value='NY',
-                                    className='six columns'),
-                       dcc.RadioItems(options=[
-                           {'label': 'New York', 'value': 'NY'},
-                           {'label': 'Washington State', 'value': 'WA'}
-                       ],
-        value='NY',
-        className='six columns'
-    ),
+    html.Div(children=[
+        dcc.Dropdown(id='state-dropdown',
+                     options=[
+                         {'label': 'New York', 'value': 'NY'},
+                         {'label': 'Washington State',
+                          'value': 'WA'}
+                     ],
+                     value='NY',
+                     className='six columns'),
         dcc.Input(
-        placeholder='Enter a value...',
-        type='text',
-        value=''
-    ),
-        html.H1(id='output', children="")])
-)
+            placeholder='Enter the number of crimes committed...',
+            type='number',
+            value='0',
+            id='crimes-committed-input'
+        )]),
+
+    html.Div(id='charges-div', children=generate_crime_entry(2))
+])
+
+
+@app.callback(Output('charges-div', 'children'),
+              [Input('crimes-committed-input', 'value')])
+def generate_case_entry_div(value):
+    return generate_crime_entry(value)
 
 
 @app.callback(Output('output', 'children'),
