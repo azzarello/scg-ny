@@ -28,6 +28,7 @@ ny_counties = generate_ny_counties()
 
 
 app.layout = html.Div(children=[
+html.Div(children=[
     html.Div(html.H2(
         children='The Second Chance Gap', style={"color":"#E3E3E3"}), style={"text-align": "center", "background-color":"#50C878", "padding-bottom":"1px", "padding-top":"1px"}),
 
@@ -117,9 +118,9 @@ app.layout = html.Div(children=[
             ], className="two columns", style={"text-align": "right"}),
         ], className="row"),
     ], id="eligibility_info", style={'display': 'none'}),
+], className="container"})
 
-
-], className="container",style={"background-color":"rgb(234,231,220, 0.5)"})
+],style={"background-color":"rgb(234,231,220, 0.5), margin:0px")
 
 
 @app.callback(Output('charges-div', 'children'),
