@@ -1,1 +1,1 @@
-web: gunicorn scg app:app.py
+web: gunicorn scg app.py
