@@ -31,6 +31,7 @@ flask_server = flask.Flask(__name__)
 app = dash.Dash(__name__, server=flask_server,
                 url_base_pathname='/',
                 external_stylesheets=external_stylesheets)
+server = app.server
 
 
 # app.config['suppress_callback_exceptions'] = True
