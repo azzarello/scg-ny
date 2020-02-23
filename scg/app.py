@@ -30,7 +30,10 @@ ny_counties = generate_ny_counties()
 app.layout = html.Div(children=[
 html.Div(children=[
     html.Div(html.H2(
-        children='The Second Chance Gap', style={"color":"#E3E3E3"}), style={"text-align": "center", "background-color":"#50C878", "padding-bottom":"1px", "padding-top":"1px"}),
+        children='The Second Chance Gap', style={"color":"rgb(234, 231, 220)"}), style={"text-align": "center", "background-color":"#50C878", "padding-bottom":"1px", "padding-top":"1px"}),
+
+    html.Iframe(width="100%",height="400",style={"text-align":"center"},
+    src="//cscue.maps.arcgis.com/apps/Embed/index.html?webmap=d89b5f63fedf4bb3adc332c282e09e7b&extent=-145.7934,13.2422,-42.2582,55.5797&zoom=true&previewImage=false&scale=true&disable_scroll=true&theme=light"),
 
     html.Div(children=[
         html.Br(),
@@ -65,9 +68,10 @@ html.Div(children=[
                        style={"display": "inline"}),
                 dcc.Input(
                     type='number',
-                    value=1,
+                    value=0,
                     id='crimes-committed-input',
-                    min=1
+                    min=0,
+                    max=3
                 ),
                 html.Hr(),
                 
@@ -98,7 +102,7 @@ html.Div(children=[
         html.Div(children=[
             html.Div(children=[
                 html.P(
-                    children="DO YOU HAVE MORE THAN TWO (2) CRIMINAL CONVICTIONS (MISDEMEANOR OR FELONY)?"),
+                    children="DO YOU HAVE MORE THAN TWO (2) CRIMINAL CONVICTIONS?"),
                 html.P(children="DO YOU HAVE MORE THAN ONE FELONY CONVICTION?"),
                 html.P(
                     children="HAVE LESS THAN TEN YEARS PASSED SINCE YOUR LAST CRIMINAL CONVICTION?"),
@@ -118,9 +122,11 @@ html.Div(children=[
             ], className="two columns", style={"text-align": "right"}),
         ], className="row"),
     ], id="eligibility_info", style={'display': 'none'}),
+
 ], className="container"),
 
-], style={"background-color":"black", "width":"100%"})
+
+], style={"background-color":"rgb(234, 231, 220, 0.5)", "width":"100%", "margin":"0px"})
 
 
 @app.callback(Output('charges-div', 'children'),
