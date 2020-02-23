@@ -118,9 +118,9 @@ html.Div(children=[
             ], className="two columns", style={"text-align": "right"}),
         ], className="row"),
     ], id="eligibility_info", style={'display': 'none'}),
-], className="container"})
+], className="container"),
 
-],style={"background-color":"rgb(234,231,220, 0.5), margin:0px")
+], style={"background-color":"black", "width":"100%"})
 
 
 @app.callback(Output('charges-div', 'children'),
