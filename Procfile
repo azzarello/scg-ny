@@ -1,1 +1,1 @@
-web: gunicorn app app:server --log-file "log.txt"
+web: gunicorn app/app:server --log-file "log.txt"
