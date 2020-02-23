@@ -54,7 +54,7 @@ html.Div(children=[
     dcc.Tabs(id="tabs-styled-with-inline", value='tab-1', children=[
         dcc.Tab(label='Manual Enter', value='tab-1', style=tab_style, selected_style=tab_selected_style),
         dcc.Tab(label='Upload Document', value='tab-2', style=tab_style, selected_style=tab_selected_style),
-        dcc.Tab(label='Resouces', value='tab-3', style=tab_style, selected_style=tab_selected_style),
+        dcc.Tab(label='Resources', value='tab-3', style=tab_style, selected_style=tab_selected_style),
     ], style={}),
 
     html.Div(children=[

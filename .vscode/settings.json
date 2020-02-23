@@ -1,7 +1,10 @@
 {
-    "python.pythonPath": "/home/corndog/anaconda3/bin/python",
+    "python.pythonPath": "C:\\Users\\Conno\\Anaconda3\\envs\\scg\\python.exe",
     "python.linting.pylintEnabled": false,
     "python.linting.pycodestyleEnabled": false,
-    "python.linting.flake8Enabled": true,
-    "python.linting.enabled": true
+    "editor.defaultFormatter": "vscode.python",
+    "editor.formatOnSave": true,
+    "python.formatting.provider": "yapf",
+    "python.globalModuleInstallation": true,
+    "python.linting.banditEnabled": true
 }
