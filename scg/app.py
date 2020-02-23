@@ -10,10 +10,22 @@ from dash.dependencies import Input, Output, State
 
 from func import generate_crime_entry, generate_ny_counties, parse_charges, output_answers
 
-external_stylesheets = [
-    "https://codepen.io/chriddyp/pen/bWLwgP.css"]
+external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 
-# "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+tab_style = {
+    'borderBottom': '1px solid #d6d6d6',
+    'padding': '6px',
+    'fontWeight': 'bold'
+}
+
+tab_selected_style = {
+    'borderTop': '1px solid #d6d6d6',
+    'borderBottom': '1px solid #d6d6d6',
+    'backgroundColor': '#119DFF',
+    'color': 'white',
+    'padding': '6px'
+}
+
 
 flask_server = flask.Flask(__name__)
 app = dash.Dash(__name__, server=flask_server,
@@ -34,6 +46,16 @@ html.Div(children=[
 
     html.Iframe(width="100%",height="400",style={"text-align":"center"},
     src="//cscue.maps.arcgis.com/apps/Embed/index.html?webmap=d89b5f63fedf4bb3adc332c282e09e7b&extent=-145.7934,13.2422,-42.2582,55.5797&zoom=true&previewImage=false&scale=true&disable_scroll=true&theme=light"),
+
+
+    #tabs here
+    html.Br(),
+    html.Br(),
+    dcc.Tabs(id="tabs-styled-with-inline", value='tab-1', children=[
+        dcc.Tab(label='Manual Enter', value='tab-1', style=tab_style, selected_style=tab_selected_style),
+        dcc.Tab(label='Upload Document', value='tab-2', style=tab_style, selected_style=tab_selected_style),
+        dcc.Tab(label='Resouces', value='tab-3', style=tab_style, selected_style=tab_selected_style),
+    ], style={}),
 
     html.Div(children=[
         html.Br(),
@@ -64,7 +86,7 @@ html.Div(children=[
         html.Div(children=[
             html.Div(children=html.P(), className="three columns"),
             html.Div(children=[
-                html.P(children='How many crimes did you commit?  ',
+                html.P(children='Number of crimes you\'d like to enter: ',
                        style={"display": "inline"}),
                 dcc.Input(
                     type='number',
@@ -79,14 +101,11 @@ html.Div(children=[
             html.Div(children=html.P(), className="three columns"), ],
             className="row"
         ),
-
-
-    ]),
-
+        html.Br(),
+    ], id="manual-input", style={} ),
 
     html.Div(id='charges-div', children=generate_crime_entry(1),
              className="row", style={"text-align": "center"}),
-
 
 
 
@@ -97,8 +116,9 @@ html.Div(children=[
 
     html.Hr(),
     html.Div(children=[
-        html.H1(children="CONGRATS! You are free now",
+        html.H1(children="CONGRATS! You can be free now!",
                 style={"text-align": "center"}, id="result"),
+        html.H5(children='If your answer is YES to any of the below questions, you are not eligible for expungement.', style={'text-align':'center'}),
         html.Div(children=[
             html.Div(children=[
                 html.P(
@@ -133,6 +153,14 @@ html.Div(children=[
               [Input('crimes-committed-input', 'value')])
 def generate_case_entry_div(value):
     return generate_crime_entry(value)
+
+#for the tabs 
+@app.callback(Output('manual-input', 'style'),
+              [Input('tabs-styled-with-inline', 'value')])
+def render_content(tab):
+    if (tab == "tab-2" or tab == "tab-3"):
+        return {"display":"none"}   
+    return {}
 
 
 @app.callback(Output('ny-county-dropdown', 'style'),
