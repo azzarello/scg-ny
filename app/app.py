@@ -33,8 +33,8 @@ app = dash.Dash(__name__, server=flask_server,
                 external_stylesheets=external_stylesheets)
 
 
-app.config['suppress_callback_exceptions'] = True
-app.scripts.config.serve_locally = True
+# app.config['suppress_callback_exceptions'] = True
+# app.scripts.config.serve_locally = True
 
 ny_counties = generate_ny_counties()
 
