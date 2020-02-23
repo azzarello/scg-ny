@@ -183,7 +183,8 @@ def generate_crime_entry(num):
 
 def crime_entry_div(offense_no):
     return html.Div(children=[
-        html.Hr(),
+
+        html.Br(),
         html.H5(children="Crime #"+str(offense_no)),
 
 
@@ -246,7 +247,10 @@ def crime_entry_div(offense_no):
         dcc.DatePickerSingle(
             id=('date-completion-'+str(offense_no)),
             date=datetime(2020, 1, 1)
-        )], className="four columns")
+        ),
+        html.Hr(),
+        
+        ], className="four columns", style={"background-color":"white"})
 
 # Eligible list index reference
 # [0] DO YOU HAVE MORE THAN TWO (2) CRIMINAL CONVICTIONS (MISDEMEANOR OR FELONY)?
@@ -277,8 +281,10 @@ def expunge_eligibility(num_crimes, state, offense, sentence_completion, disposi
     """ Make the date a date time object """
     # print(disp_date)
     for case in disp_date:
+        print(case)
         ten_after_disp = datetime(
             case.year + 10, case.month, case.day)
+        print(ten_after_disp)
         if(ten_after_disp >= current_date):
             eligible_list[2] = 1
             break

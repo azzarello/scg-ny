@@ -29,10 +29,10 @@ ny_counties = generate_ny_counties()
 
 app.layout = html.Div(children=[
     html.Div(html.H2(
-        children='The Second Chance Gap'), style={"text-align": "center"}),
+        children='The Second Chance Gap', style={"color":"#E3E3E3"}), style={"text-align": "center", "background-color":"#50C878", "padding-bottom":"1px", "padding-top":"1px"}),
 
     html.Div(children=[
-
+        html.Br(),
         html.Div(children=[
             html.Div(children=html.P(), className="three columns"),
             html.Div(children=[
@@ -67,7 +67,9 @@ app.layout = html.Div(children=[
                     value=1,
                     id='crimes-committed-input',
                     min=1
-                )
+                ),
+                html.Hr(),
+                
             ], className="six columns"),
             html.Div(children=html.P(), className="three columns"), ],
             className="row"
@@ -117,7 +119,7 @@ app.layout = html.Div(children=[
     ], id="eligibility_info", style={'display': 'none'}),
 
 
-], className="container")
+], className="container",style={"background-color":"rgb(234,231,220, 0.5)"})
 
 
 @app.callback(Output('charges-div', 'children'),
