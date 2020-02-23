@@ -1,1 +1,1 @@
-web: gunicorn app:flask_server --log-file "log.txt"
+web: gunicorn app:server --log-file "log.txt"
