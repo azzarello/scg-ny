@@ -166,7 +166,7 @@ charge_field = {
 
 def generate_ny_counties():
     county_list = []
-    with open('ny_counties.txt') as f:
+    with open('data/ny_counties.txt') as f:
         content = f.readlines()
         # print(content)
         county_list = [{'label': elem.strip(), 'value': elem.strip()}

@@ -41,10 +41,13 @@ app.layout = html.Div(children=[
                                 {'label': 'New York', 'value': 'NY'},
                                 {'label': 'Washington State',
                                  'value': 'WA'}
-                             ]),
+                             ],
+                             placeholder='Select State...'),
+                html.Br(),
                 dcc.Dropdown(id='ny-county-dropdown',
                              options=ny_counties,
-                             style={"display": "none"}
+                             style={"display": "none"},
+                             placeholder='Select County...'
                              ),
             ], className="six columns"),
             html.Div(children=html.P(), className="three columns"), ],
@@ -131,20 +134,6 @@ def update_output_component(dropdown_value):
     else:
         return {'display': 'none'}
 
-
-"""
-@app.callback([Output('eligibility_info', 'children'),               
-               ],
-              [Input('submit-crimes-button', 'n_clicks')])
-def showResult(n):
-    if (n > 0):
-        return {}
-    else:
-        return {"display" : "none"}
-
-"""
-
-
 @app.callback([Output('criminal_convictions', 'children'),
                Output('felony_conviction', 'children'),
                Output('ten_years_period', 'children'),
@@ -155,26 +144,19 @@ def showResult(n):
                Output('eligibility_info', 'style')],
               [Input('submit-crimes-button', 'n_clicks')],
               [State('charges-div', 'children')])
+
 def update_crimes_store(n, charges):
-    """
-    if (n > 1):
-        result = parse_charges(charges)
-        eligibility, result_list = expunge_eligibility(_____result______)
-        return_message=""
-        if (eligibility):
-            return_message="Congrats!"
-        else:
-            return_message="Sorry!"
-        return result_list[0], result_list[1], result_list[2], result_list[3], result_list[4], result_list[5], return_message
-    """
-    if (n >= 1):
+    if n is not None and n >= 1:
         eligible_list, eligible = parse_charges(charges)
         ret = [0, 0, 0, 0, 0, 0]
         return_message = ''
         ret[0], ret[1], ret[2], ret[3], ret[4], ret[5], return_message = output_answers(
             eligible_list, eligible)
-        print(ret)
+        print('Test Output')
+        pprint(ret)
+        pprint(return_message)
         return ret[0], ret[1], ret[2], ret[3], ret[4], ret[5], return_message, {}
+    return "","","","","", "","", {'display':'none'}
 
 
 if __name__ == '__main__':
