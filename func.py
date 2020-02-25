@@ -403,8 +403,8 @@ def output_answers(eligible_list, eligible):
 
     return_message = ""
     if (eligible):
-        return_message = "Congrats"
+        return_message = "CONGRATS! You can be free now!"
     else:
-        return_message = "Sorry"
+        return_message = "SORRY, you are not eligible for expungement."
 
     return ret[0], ret[1], ret[2], ret[3], ret[4], ret[5], return_message
