@@ -153,6 +153,7 @@ sexOffenderCrimes = {
     "263.30": "Facilitating a Sexual Performance by a Child with a Controlled Substance or Alcohol"
 }
 
+
 charge_field = {
     'charge-dropdown': 'charge-type',
     'offense-description': 'offense-description',
@@ -281,16 +282,23 @@ def expunge_eligibility(num_crimes, state, offense, sentence_completion, disposi
     """ Make the date a date time object """
     # print(disp_date)
     for case in disp_date:
+        if len(case) > 10:
+            case = case.split("T")[0]
         print(case)
         ten_after_disp = datetime(
-            case.year + 10, case.month, case.day)
-        print(ten_after_disp)
+            int(case.split('-')[0]) + 10, int(case.split('-')[1]), int(case.split('-')[2]))
+        # print ("Important Info:" )
+        # print(ten_after_disp)
+        
         if(ten_after_disp >= current_date):
             eligible_list[2] = 1
             break
 
     # 4. Check if ineligible
     # 5. Check if registered as sex criminal
+    #Key words that signal not elligible
+    serious_words = ['murder', 'Murder']
+    sexual_words = ['sex', 'rape', 'Sex', 'Rape',]
     for case in offense:
         # Found a non-eligible case for sealing
         # print (case_no)
@@ -299,6 +307,16 @@ def expunge_eligibility(num_crimes, state, offense, sentence_completion, disposi
             # See if they are a sex offender
             if case[2] in sexOffenderCrimes:
                 eligible_list[4] = 1
+        
+        if case[1] != None:
+            for i in serious_words:
+                if i in case[1]:
+                    eligible_list[3] = 1
+            for x in sexual_words:
+                if x in case[1]:
+                    eligible_list[3] = 1
+                    eligible_list[4] = 1
+    
 
     # 6. Do you currently have a criminal case
     for case in disposition:
@@ -378,7 +396,9 @@ def parse_charges(charges):
         except Exception:
             pass
         try:
-            disp_date.append(datetime(el.get('start-date')))
+            disp_date.append(el.get('start-date'))
+            
+
         except Exception:
             pass
         try:
@@ -387,6 +407,8 @@ def parse_charges(charges):
             pass
     print('disp date')
     print(disp_date)
+    print ('offense')
+    print(offense)
     eligible_list, eligible = expunge_eligibility(
         num_crimes, state, offense, sentence_completion, disposition, disp_date, county_state, end_date)
     return eligible_list, eligible
